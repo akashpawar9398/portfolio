@@ -1,0 +1,248 @@
+/* theme.css — loaded AFTER styles.css. Replaces the editorial paper/vermilion look with a
+   clean, cool-neutral "product" look: cobalt accent, bold sans headlines, soft cards.
+   script.js and all markup stay untouched; delete this file to get the old look back. */
+
+:root {
+  --paper: light-dark(#f3f5fa, #090e1a);
+  --paper-2: light-dark(#e9edf6, #101728);
+  --paper-3: light-dark(#dde3f0, #19223a);
+  --card: light-dark(#ffffff, #0e1627);
+  --surface-2: light-dark(#f8faff, #17213a);
+  --violet: light-dark(#7a4df0, #b49cff);
+  --ink: light-dark(#0c1424, #eef2fc);
+  --ink-2: light-dark(#434f68, #b4bed4);
+  --ink-3: light-dark(#66728c, #9aa7c3);
+  --rule: light-dark(rgba(12, 20, 36, 0.09), rgba(238, 242, 252, 0.17));
+  --rule-strong: light-dark(rgba(12, 20, 36, 0.22), rgba(238, 242, 252, 0.38));
+  --accent: light-dark(#2554e6, #7ea3ff);
+  --accent-ink: light-dark(#1d44c4, #9bb8ff);
+  --accent-soft: light-dark(rgba(37, 84, 230, 0.09), rgba(126, 163, 255, 0.14));
+  --on-accent: light-dark(#ffffff, #07101f);
+  --shadow-1: light-dark(0 1px 2px rgba(12, 20, 36, 0.06), 0 1px 2px rgba(0, 0, 0, 0.5));
+  --shadow-2: light-dark(0 24px 48px -24px rgba(24, 48, 120, 0.28), 0 24px 48px -20px rgba(0, 0, 0, 0.7));
+  --font-display: "Instrument Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --display-1: clamp(2.3rem, 1.2rem + 4.6vw, 4.9rem);
+  --display-2: clamp(1.8rem, 1.2rem + 2.2vw, 3rem);
+  --radius-s: 8px;
+  --radius-m: 14px;
+  --radius-l: 22px;
+  --section-pad: clamp(3.25rem, 7.5vw, 6rem);
+}
+
+body { background: var(--paper); color: var(--ink); font-family: var(--font-sans); }
+.grain { display: none; }
+
+/* One soft light source behind the hero — the only decorative layer on the page. */
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: min(80vh, 640px);
+  background: radial-gradient(60% 70% at 85% 0%, var(--accent-soft), transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Headlines: heavy, tight sans. Emphasised words go muted, not italic. */
+.hero__title, .section__title {
+  font-family: var(--font-display);
+  font-weight: 650;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+}
+.hero__title { max-width: 20ch; }
+.hero__title em, .section__title em { font-style: normal; color: var(--ink-3); }
+.hero__lede, .section__lede { color: var(--ink-2); }
+
+/* Labels: sentence case, readable, no tracked caps. */
+.eyebrow { font: 500 0.875rem/1.3 var(--font-sans); letter-spacing: 0; text-transform: none; color: var(--ink-3); }
+.eyebrow__num {
+  font: 600 0.72rem/1 var(--font-mono);
+  color: var(--accent-ink);
+  background: var(--accent-soft);
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+}
+.hero__name { font-weight: 650; font-size: 1.05rem; color: var(--ink); }
+.work__meta dt, .skills__label, .timeline__when, .timeline__related-label, .work__h, .edu__when,
+.edu__score-k, .contact__k, .diagram__col-label, .gantt__label, .skills__legend, .spec__cell dt {
+  text-transform: none;
+  letter-spacing: 0.005em;
+}
+.work__h, .spec__cell dt, .contact__k { font-family: var(--font-sans); font-weight: 600; color: var(--ink-3); }
+
+/* Layout rhythm: sections are separated by space and cards, not rules. */
+.section { border-top: 0; }
+.section--hero { padding-top: clamp(2rem, 6vw, 5rem); }
+
+/* Top bar */
+.topbar {
+  background: color-mix(in srgb, var(--paper) 80%, transparent);
+  -webkit-backdrop-filter: saturate(1.5) blur(14px);
+  backdrop-filter: saturate(1.5) blur(14px);
+}
+.brand__name { font-weight: 650; letter-spacing: -0.01em; }
+.brand__dot { fill: var(--accent); }
+.topnav__link { border-radius: 999px; }
+.topnav__num { display: none; }
+
+/* Buttons */
+.btn {
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  border: 1px solid var(--ink);
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.btn:hover { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.btn--ghost { background: transparent; color: var(--ink); border-color: var(--rule-strong); }
+.btn--ghost:hover { background: var(--accent-soft); color: var(--accent-ink); border-color: var(--accent); }
+.icon-btn { border-radius: 999px; }
+.pill-link { border-radius: 999px; background: var(--accent-soft); color: var(--accent-ink); border-color: transparent; }
+
+/* Hero portrait + at-a-glance strip (what a recruiter scans first) */
+.portrait__frame {
+  border-radius: var(--radius-l);
+  outline: 0;
+  box-shadow: 0 0 0 1px var(--rule), 12px 12px 0 var(--accent-soft);
+}
+.spec {
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow-1);
+  padding: 0.5rem;
+}
+.spec__cell { padding: 0.9rem 1.1rem; }
+.spec__cell dd { font-weight: 650; font-size: 1.05rem; color: var(--ink); letter-spacing: -0.01em; }
+
+/* Cards: selected work, experience, education */
+.work { display: grid; gap: 1.25rem; }
+.work__item, .timeline__item, .edu__item {
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow-1);
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  margin: 0;
+  transition: border-color var(--dur-2) var(--ease-out), box-shadow var(--dur-2) var(--ease-out);
+}
+.work__item::before { display: none; }
+.work__item:hover, .timeline__item:hover { border-color: var(--accent); box-shadow: var(--shadow-2); }
+.work__index { color: var(--accent-ink); }
+.work__title, .timeline__role, .edu__title { font-family: var(--font-display); font-weight: 650; letter-spacing: -0.025em; }
+.timeline { display: grid; gap: 1rem; }
+.timeline__when .is-present { color: var(--accent-ink); font-weight: 650; }
+.timeline__item.is-hot { border-color: color-mix(in srgb, var(--accent) 45%, var(--rule)); }
+
+/* Skill and tech tags */
+.tag {
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  font: 500 0.78rem/1 var(--font-sans);
+  letter-spacing: 0;
+  text-transform: none;
+  padding: 0.4rem 0.75rem;
+}
+.skills__count { color: var(--accent-ink); }
+
+/* Contact */
+.contact__email {
+  font: 650 clamp(1.5rem, 1rem + 3.2vw, 3.1rem)/1.1 var(--font-display);
+  letter-spacing: -0.035em;
+}
+
+/* Small screens: tighter cards, smaller portrait offset */
+@media (max-width: 640px) {
+  .portrait__frame { box-shadow: 0 0 0 1px var(--rule), 8px 8px 0 var(--accent-soft); }
+  .work__item, .timeline__item, .edu__item { border-radius: var(--radius-m); padding: 1.1rem; }
+  .btn { width: 100%; justify-content: center; }
+}
+
+/* ===== Revision 2: dark-mode legibility + extra polish ===== */
+
+/* Overview diagram: stage, nodes and wires now sit on distinct surfaces so they read in dark mode. */
+.diagram__stage {
+  background-color: var(--card);
+  background-image: radial-gradient(color-mix(in srgb, var(--ink-3) 35%, transparent) 1px, transparent 1.3px);
+  border-color: var(--rule-strong);
+  border-radius: 28px;
+  box-shadow: var(--shadow-1);
+}
+.node { background: var(--surface-2); border-color: var(--rule-strong); }
+.node .icon, .node__sub, .diagram__col-label { color: var(--ink-2); }
+.node__title { font-weight: 600; }
+.node[aria-pressed="true"]::after { border-color: var(--card); }
+.wire, .wire--port { stroke: color-mix(in srgb, var(--ink-3) 70%, transparent); }
+.wire--port { fill: var(--card); }
+.wire.is-active, .wire--port.is-active { stroke: var(--accent); }
+.wire--port.is-active { fill: var(--accent); }
+.diagram__detail-text, .diagram__detail-body { color: var(--ink-2); }
+.diagram__detail-title { color: var(--ink); }
+
+/* Contact: a real panel, with each channel as its own clearly bordered row. */
+.contact {
+  background: linear-gradient(135deg, var(--card), color-mix(in srgb, var(--accent) 7%, var(--card)));
+  border: 1px solid var(--rule-strong);
+  border-radius: 28px;
+  padding: clamp(1.25rem, 4vw, 3rem);
+  box-shadow: var(--shadow-2);
+}
+.contact__email { color: var(--ink); border-bottom: 3px solid var(--accent); padding-bottom: 0.15rem; }
+.contact__list { display: grid; gap: 0.6rem; }
+.contact__row {
+  padding: 0.95rem 1.1rem;
+  background: var(--surface-2);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-m);
+  transition: border-color var(--dur-2) var(--ease-out), background var(--dur-2) var(--ease-out);
+}
+.contact__row:hover { border-color: var(--accent); background: var(--accent-soft); }
+.contact__k { color: var(--ink-2); font-weight: 600; }
+.contact__v { color: var(--ink); font-size: 0.95rem; }
+.footer { border-top-color: var(--rule-strong); color: var(--ink-2); }
+
+/* Atmosphere: two soft light sources and a faded dot grid behind the hero. */
+body::before {
+  height: min(100vh, 780px);
+  background:
+    radial-gradient(50% 60% at 88% 0%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 70%),
+    radial-gradient(40% 50% at 8% 12%, color-mix(in srgb, var(--violet) 14%, transparent), transparent 70%),
+    radial-gradient(color-mix(in srgb, var(--ink-3) 30%, transparent) 1px, transparent 1.3px) 0 0 / 26px 26px;
+  -webkit-mask-image: linear-gradient(#000 40%, transparent);
+  mask-image: linear-gradient(#000 40%, transparent);
+}
+
+/* Hero */
+.hero__title em { background: linear-gradient(95deg, var(--accent), var(--violet)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.portrait__frame { box-shadow: 0 0 0 1px var(--rule-strong), 14px 14px 0 var(--accent-soft), 0 36px 64px -32px color-mix(in srgb, var(--accent) 60%, transparent); }
+.btn:not(.btn--ghost):not(.btn--small) { box-shadow: 0 10px 26px -10px color-mix(in srgb, var(--accent) 70%, transparent); }
+.spec { position: relative; overflow: hidden; }
+.spec::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--violet)); }
+.spec__cell dd { font-size: 1.15rem; }
+.section__title::after { content: ""; display: block; width: 3rem; height: 4px; margin-top: 1rem; border-radius: 4px; background: linear-gradient(90deg, var(--accent), var(--violet)); }
+
+/* Current role stands out; cards follow the pointer with a soft spotlight (see fx.js). */
+.timeline__item.is-hot { box-shadow: inset 4px 0 0 var(--accent), var(--shadow-1); }
+.work__item:hover, .timeline__item:hover, .edu__item:hover {
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), var(--accent-soft), transparent 65%), var(--card);
+}
+.tag { transition: background var(--dur-2), color var(--dur-2); }
+.tag:hover { background: var(--accent); color: var(--on-accent); }
+
+/* Reading progress bar, tied to page scroll (supporting browsers only). */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    .topbar::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--violet));
+      transform: scaleX(0); transform-origin: 0 50%;
+      animation: read-progress linear both; animation-timeline: scroll(root);
+    }
+    @keyframes read-progress { to { transform: scaleX(1); } }
+  }
+}
